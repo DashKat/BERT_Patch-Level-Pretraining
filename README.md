@@ -1,1 +1,7 @@
+This repository contains code for our final project for CS 4650 with Dr. Weicheng Ma. The research project covers the usage of patch-level pretraining on BERT. In this repository, you can find a basic implementation of the model proposed in our final paper. For compatibility, flash-attention optimizations, wandb logging, mixed precision training, model saving, and more items were removed to create an understandable and portable implementation. Due to these factors you may see small differences in performance and relative speed increases between this version of the code and the final paper.
 
+# Basic Run Instructions
+1. Open a Google Colab with an A100 (T4 should work too but is not yet tested) instance
+2. !pip install datasets transformers wandb
+3. Alter configuration as desired in train.py
+4. python train.py

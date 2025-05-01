@@ -21,3 +21,7 @@ BERT_Patch-Level-Pretraining/
 2. `!pip install datasets transformers wandb`
 3. Alter configuration as desired in `train.py`
 4. `python train.py`
+
+# Group Members
+
+Pranav Devarinti, Dasarath (Dash) Katragadda, Will Tjokroamidjojo, Nikhil Sathisha

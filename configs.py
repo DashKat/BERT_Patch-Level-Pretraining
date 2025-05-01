@@ -134,7 +134,6 @@ class TimingConfig():
         dropout,
         attnDropout,
         activation,
-        eps
     ):
         self.contextLengths = contextLengths
         self.batchSizes = batchSizes
@@ -145,4 +144,3 @@ class TimingConfig():
         self.dropout = dropout
         self.attnDropout = attnDropout
         self.activation = activation
-        self.eps = eps

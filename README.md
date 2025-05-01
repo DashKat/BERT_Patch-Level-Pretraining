@@ -19,9 +19,9 @@ BERT_Patch-Level-Pretraining/
 # Basic Run Instructions
 1. Open a Google Colab with an A100 (T4 will run out of memory, may work if batch size is lowered) instance. 
 2. `!pip install datasets transformers wandb` (If not using a colab, other packages may need to be installed).
-3. Alter configuration classes as desired in `train.py` as desired.
+3. Alter configuration classes as desired in `train.py` as desired. (lines 13 - 14)
 4. Run `python train.py` to see the loss decrease with the pretraining process.
-5. Alter configuration classes as desired in `timing.py` as desired.
+5. Alter configuration classes as desired in `timing.py` as desired. (line 33)
 6. Run `python timing.py` to see timing figures.
 
 # Group Members

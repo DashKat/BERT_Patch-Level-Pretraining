@@ -1,4 +1,5 @@
 import time
+from typing_extensions import runtime
 import torch
 import torch.nn as nn
 import pandas as pd
@@ -17,6 +18,11 @@ def benchmarkLayer(layer, embeds, mask=None, numWarmups=10, numRepeats=50):
 
         # Does this work or do we need to check for downscaleFactor?
         _ = layer(embeds, attn_mask=mask)
+
+        torch.cuda.synchronize()
+        stopTime = time.time()
+        elapsed = stopTime-startTime
+        runtimes.append(elapsed)
 
     # Remove warmup from final timings
     avgTime = sum(runtimes[numWarmups:]) / len(runtimes[numWarmups:])
@@ -54,7 +60,7 @@ for contextLength in config.contextLengths:
                                                       max_seq=contextLength,
                                                       factors=[factor])
             
-            layer = TransformerBlock(layer_config, 0)
+            layer = TransformerBlock(layer_config, 0).to(device)
             compiledLayer = torch.compile(layer)
 
             customTime, customMem = benchmarkLayer(compiledLayer, embedding, mask)

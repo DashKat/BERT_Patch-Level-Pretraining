@@ -121,3 +121,28 @@ class TrainConfig():
         self.grad_clip_norm = grad_clip_norm
         self.mlm_probability = mlm_probability
         self.max_seq = max_seq
+
+class TimingConfig():
+    def __init__(
+        self,
+        contextLengths,
+        batchSizes,
+        factors,
+        dModel,
+        nhead,
+        feedforwardDim,
+        dropout,
+        attnDropout,
+        activation,
+        eps
+    ):
+        self.contextLengths = contextLengths
+        self.batchSizes = batchSizes
+        self.factors = factors
+        self.dModel = dModel
+        self.nhead = nhead
+        self.feedforwardDim = feedforwardDim
+        self.dropout = dropout
+        self.attnDropout = attnDropout
+        self.activation = activation
+        self.eps = eps

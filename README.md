@@ -3,16 +3,21 @@ This repository contains code for our final project for CS 4650 with Dr. Weichen
 
 This codebase implements a modified version of DistilBERT that introduces layer-wise compression to reduce training costs. Instead of processing full token sequence at every layer, each transformer block will temporarily downsample the input sequence, perform attention and feedforward operations, and upsample back to the original length. By doing this, we aim to improve the speed of training and decrease memory usage while maintaining relatively similar performance to the standard DistilBERT model.
 
+# Dataset
+This model was trained on the FineWeb-Edu dataset, which contains 1.3 trillion tokens of educational data such as research papers, allowing for higher performance on reasoning and knowledge-based tasks. The dataset used can be found [HERE](https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu).
+
+Full path: `https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu`
+
 # File Structure
 BERT_Patch-Level-Pretraining/
-- 'configs.py': Defines model and training configuration classes including DownsampledDistilBertConfig which is a configuration class that stores the configuration of a DistilBertModel
-- 'layers.py': Contains custom transformer layer logic. Here the 'TransformerBlock' applies the downscaling and upscaling at each layer
-- 'timing.py': This benchmarks the runtime and memory usage of different transformer configurations using various compression factors and sequence lengths
-- 'train.py': This runs training on the modified DistilBERT model
-- 'utils.py': Utility functions for creating the model and dataloader.
+- `configs.py`: Defines model and training configuration classes including DownsampledDistilBertConfig which is a configuration class that stores the configuration of a DistilBertModel
+- `layers.py`: Contains custom transformer layer logic. Here the 'TransformerBlock' applies the downscaling and upscaling at each layer
+- `timing.py`: This benchmarks the runtime and memory usage of different transformer configurations using various compression factors and sequence lengths
+- `train.py`: This runs training on the modified DistilBERT model
+- `utils.py`: Utility functions for creating the model and dataloader.
   
 # Basic Run Instructions
 1. Open a Google Colab with an A100 (T4 should work too but is not yet tested) instance
-2. !pip install datasets transformers wandb
-3. Alter configuration as desired in train.py
-4. python train.py
+2. `!pip install datasets transformers wandb`
+3. Alter configuration as desired in `train.py`
+4. `python train.py`

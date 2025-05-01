@@ -1,4 +1,8 @@
-This repository contains code for our final project for CS 4650 with Dr. Weicheng Ma. The research project covers the usage of patch-level pretraining on BERT. In this repository, you can find a basic implementation of the model proposed in our final paper. For compatibility, flash-attention optimizations, wandb logging, mixed precision training, model saving, and more items were removed to create an understandable and portable implementation. Due to these factors you may see small differences in performance and relative speed increases between this version of the code and the final paper.
+# Overview
+This repository contains code for our final project for CS 4650 with Dr. Weicheng Ma. The research project covers the usage of patch-level pretraining on BERT. In this repository, you can find a basic implementation of the model proposed in our final paper. For compatibility, flash-attention optimizations, wandb logging, mixed precision training, model saving, and more items were removed to create an understandable and portable implementation. Due to these factors you may see small differences in performance and relative speed increases between this version of the code and the final paper. 
+
+This codebase implements a modified version of DistilBERT that introduces layer-wise compression to reduce training costs. Instead of processing full token sequence at every layer, each transformer black will temporarily downsample the input sequence, perform attention and feedforward operations, and upsample back to the original length. By doing this, we aim to improve the efficiency of training while maintaining relatively similar performance to the standard DistilBERT model.
+
 # File Structure
 BERT_Patch-Level-Pretraining/
 - 'configs.py': Defines model and training configuration classes including DownsampledDistilBertConfig which is a configuration class that stores the configuration of a DistilBertModel

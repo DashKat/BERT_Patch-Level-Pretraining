@@ -5,7 +5,7 @@ BERT_Patch-Level-Pretraining/
 - 'layers.py': Contains custom transformer layer logic. Here the 'TransformerBlock' applies the downscaling and upscaling at each layer
 - 'timing.py': This benchmarks the runtime and memory usage of different transformer configurations using various compression factors and sequence lengths
 - 'train.py': This runs training on the modified DistilBERT model
-- 'utils.py': Utility functions for creating model and dataloader.
+- 'utils.py': Utility functions for creating the model and dataloader.
   
 # Basic Run Instructions
 1. Open a Google Colab with an A100 (T4 should work too but is not yet tested) instance

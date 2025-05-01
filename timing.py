@@ -3,10 +3,7 @@ import torch
 import torch.nn as nn
 import pandas as pd
 from layers import FFN, TransformerBlock
-from configs import TimingConfig
-
-def baselineLayer(dModel, nhead, dimFeedforward, dropout):
-    return nn.TransformerEncoderLayer(dModel, nhead, dimFeedforward, dropout, batch_first=True)
+from configs import TimingConfig, DownsampledDistilBertConfig
 
 def benchmarkLayer(layer, embeds, mask=None, numWarmups=10, numRepeats=50):
     curDevice = embeds.device
@@ -35,8 +32,8 @@ config = TimingConfig(contextLengths=[256, 512, 1024, 2048],
                       feedforwardDim=3072,
                       dropout=0.0,
                       attnDropout=0.0,
-                      activation='relu',
-                      eps=1e-12)
+                      activation='gelu') #ignored, but i'll pass to config anyway
+                     
 device = torch.device('cuda')
 
 output = []
@@ -44,23 +41,20 @@ for contextLength in config.contextLengths:
     for batchSize in config.batchSizes:
         embedding = torch.randn(batchSize, contextLength, config.dModel, device=device)
         mask = None
-
-        baseline = baselineLayer(config.dModel, config.nhead, config.feedforwardDim, config.dropout).to(device)
-        compiledBaseline = torch.compile(baseline)
-
-        baselineTime, baselineMem = benchmarkLayer(compiledBaseline, embedding, mask)
-        output.append({
-            'layer': 'baseline',
-            'factor': 1,
-            'bs': batchSize,
-            'L': contextLength,
-            'time': baselineTime,
-            'mem': baselineMem
-        })
-
-        for factor in config.factors:
+        
+        for factor in config.factors: #Factor of 1 can be used as the baseline. It should be equivalent to the original DistillBERT layer w/ no computations apart from fast if statement evals. 
             # How do i generate config for this
-            layer = TransformerBlock()
+            layer_config = DownsampledDistilBertConfig(dim=config.dModel,
+                                                      n_heads=config.nhead,
+                                                      n_layers=1,
+                                                      hidden_dim=config.feedforwardDim,
+                                                      dropout=config.dropout,
+                                                      attention_dropout=config.attnDropout,
+                                                      activation=config.activation,
+                                                      max_seq=contextLength,
+                                                      factors=[factor])
+            
+            layer = TransformerBlock(layer_config, 0)
             compiledLayer = torch.compile(layer)
 
             customTime, customMem = benchmarkLayer(compiledLayer, embedding, mask)

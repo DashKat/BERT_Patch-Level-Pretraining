@@ -24,6 +24,55 @@ BERT_Patch-Level-Pretraining/
 5. Alter configuration classes as desired in `timing.py` as desired. (line 33)
 6. Run `python timing.py` to see timing figures.
 
+# Research Code Sweep Documentation
+In our research, we ran three final sweeps after running hundreds of test models. These are the hyperparameters used to generate the grid search for each sweep.
+
+## Sweep 1: Patch Size and Learning Rate Comparison
+
+#### Per-Layer Patch Configuration Values:
+```
+[1, 1, 1, 1, 1, 1]
+[1, 1, 2, 2, 4, 4]
+[1, 2, 4, 1, 2, 4]
+[1, 2, 4, 4, 2, 1]
+[1, 4, 2, 4, 2, 1]
+[4, 4, 2, 2, 1, 1]
+```
+
+#### Learning Rates
+```
+1e-4
+2e-4
+4e-4
+7e-4
+1e-3
+```
+
+## Sweep 2: Patch Size Configurations
+
+#### Per-Layer Patch Configuration Values:
+```
+[1, 1, 1, 1, 1, 1]
+[2, 2, 1, 1, 1, 1]
+[2, 2, 2, 2, 1, 1]
+[4, 4, 2, 2, 1, 1]
+[4, 4, 4, 4, 1, 1]
+[8, 8, 4, 4, 1, 1]
+[8, 8, 8, 8, 1, 1]
+```
+
+#### Learning Rate: `2e-4`
+
+## Sweep 3: Patch vs Vanilla DistilBERT Long Train
+
+#### Per-Layer Patch Configuration Values:
+```
+[1, 1, 1, 1, 1, 1]
+[4, 2, 2, 1, 1, 1]
+```
+
+#### Learning Rate: `2e-4`
+
 # Group Members
 
 Pranav Devarinti, Dasarath (Dash) Katragadda, Will Tjokroamidjojo, Nikhil Sathisha
